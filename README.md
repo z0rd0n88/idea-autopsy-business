@@ -1,8 +1,8 @@
-# Idea Autopsy
+# Idea Autopsy Business
 
 **An evidence-gated, multi-agent review of product and business proposals for Claude Code. It reports what your evidence supports, asks before changing anything consequential, and writes the next version itself.**
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue)](.claude-plugin/plugin.json)
+[![Version](https://img.shields.io/badge/version-4.0.0-blue)](.claude-plugin/plugin.json)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-D97757)](https://code.claude.com/docs/en/plugins-reference)
 [![Python 3.10+, stdlib only](https://img.shields.io/badge/python-3.10%2B%20%C2%B7%20stdlib%20only-3776AB)](skills/_shared)
@@ -181,20 +181,20 @@ Your original document is never overwritten, and history is never pruned.
 ## Install
 
 ```bash
-claude plugin marketplace add z0rd0n88/idea-autopsy
-claude plugin install idea-autopsy@idea-autopsy
+claude plugin marketplace add z0rd0n88/idea-autopsy-business
+claude plugin install idea-autopsy-business@idea-autopsy-business
 ```
 
 To use a local checkout instead:
 
 ```bash
-git clone https://github.com/z0rd0n88/idea-autopsy.git
-claude --plugin-dir ./idea-autopsy
+git clone https://github.com/z0rd0n88/idea-autopsy-business.git
+claude --plugin-dir ./idea-autopsy-business
 ```
 
 The plugin works on its own, without any other marketplace. Both agents are bundled under `agents/`. The helpers need Python 3.10+ on a POSIX host (`fcntl` provides the locking), and they have no third-party dependencies and make no model or API calls.
 
-To update, run `claude plugin marketplace update idea-autopsy && claude plugin update idea-autopsy@idea-autopsy`, then restart the host.
+To update, run `claude plugin marketplace update idea-autopsy-business && claude plugin update idea-autopsy-business@idea-autopsy-business`, then restart the host.
 
 ## Usage
 
@@ -231,7 +231,7 @@ All examples are **synthetic fixtures**, built to illustrate the output contract
 ## Repository layout
 
 ```text
-idea-autopsy/
+idea-autopsy-business/
 ├── .claude-plugin/
 │   ├── plugin.json            # plugin manifest (v3.0.0)
 │   └── marketplace.json       # self-hosted marketplace entry

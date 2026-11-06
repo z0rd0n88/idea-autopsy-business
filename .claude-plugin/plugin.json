@@ -1,12 +1,12 @@
 {
-  "name": "idea-autopsy",
+  "name": "idea-autopsy-business",
   "description": "Evidence-based idea assessment, user decisions, and agent-written revisions across four connected skills.",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "author": {
     "name": "z0rd0n88"
   },
-  "homepage": "https://github.com/z0rd0n88/idea-autopsy",
-  "repository": "https://github.com/z0rd0n88/idea-autopsy",
+  "homepage": "https://github.com/z0rd0n88/idea-autopsy-business",
+  "repository": "https://github.com/z0rd0n88/idea-autopsy-business",
   "license": "MIT",
   "keywords": [
     "idea", "autopsy", "review", "proposal", "stress-test", "evaluate"
