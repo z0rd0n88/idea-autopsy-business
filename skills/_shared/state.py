@@ -84,6 +84,12 @@ REQUEST_FIELDS = {
 }
 
 
+NEWER_SCHEMA = (
+    "this ledger was written by a newer Idea Autopsy (schema {}); it is not a "
+    "legacy ledger and is not migrated. Use a different slug."
+)
+
+
 class StateError(ValueError):
     """An actionable ledger/operation error, displayed without a CLI traceback."""
 
@@ -302,8 +308,17 @@ def owned_path(root, relative, allow_recovery_link=False):
     return current
 
 
+def refuse_newer(data):
+    version = data.get("schema_version") if isinstance(data, dict) else None
+    require(
+        not (type(version) is int and version > SCHEMA_VERSION),
+        NEWER_SCHEMA.format(version),
+    )
+
+
 def validate_state(state):
     require(isinstance(state, dict), "state must be an object")
+    refuse_newer(state)
     require(
         type(state.get("schema_version")) is int
         and state["schema_version"] == SCHEMA_VERSION,
@@ -835,6 +850,7 @@ def _legacy(root, request):
     )
     raw = state_path.read_bytes()
     legacy = json.loads(raw.decode("utf-8"))
+    refuse_newer(legacy)
     require(
         isinstance(legacy, dict) and legacy.get("schema_version") != SCHEMA_VERSION,
         "state is not a legacy object",
@@ -931,6 +947,8 @@ def execute(operation, request):
             )
             state_path = owned_path(root, "state.json")
             if operation == "init":
+                if state_path.exists():
+                    refuse_newer(_read(state_path))
                 require(
                     not state_path.exists(),
                     "state already exists; use status or explicit import-legacy",

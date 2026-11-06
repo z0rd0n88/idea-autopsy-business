@@ -869,6 +869,22 @@ class StateTests(unittest.TestCase):
         self.assertEqual(ledger["current_version"], "v1")
         self.assertEqual((root / "v9.md").read_text(), "historical proposal")
 
+    def test_newer_schema_ledger_is_refused_not_imported(self):
+        root = self.project / ".autopsy/demo"
+        root.mkdir(parents=True)
+        (root / ".lock").write_text("")
+        raw = b'{"schema_version": 3, "slug": "demo", "brief": {}}\n'
+        (root / "state.json").write_bytes(raw)
+        for operation, fields in (
+            ("status", {}),
+            ("init", {}),
+            ("import-legacy", {"acknowledge_untrusted": True}),
+        ):
+            with self.subTest(operation=operation):
+                with self.assertRaisesRegex(state.StateError, "newer Idea Autopsy"):
+                    self.call(operation, **fields)
+        self.assertEqual((root / "state.json").read_bytes(), raw)
+
     def test_interrupted_artifact_publish_requires_explicit_hash_checked_recovery(self):
         result = self.init()
         root = Path(result["root"])
